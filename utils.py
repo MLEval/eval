@@ -2,7 +2,6 @@ import json
 from bson import ObjectId
 from functools import wraps
 
-from app import app
 import mongoengine as me
 
 
@@ -29,9 +28,3 @@ def serialize_response(func):
     def func_wrapper(*args, **kwargs):
         return JSONEncoder().encode(make_serializable(func(*args, **kwargs)))
     return func_wrapper
-
-
-def route(rule, endpoint, view_func, method):
-    """Adds route to app."""
-    assert rule[-1] == '/', 'rule should end in a trailing slash'
-    app.add_url_rule(rule, endpoint, view_func, methods=[method])
