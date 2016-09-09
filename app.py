@@ -4,9 +4,7 @@ from flask_mongoengine import MongoEngine
 app = Flask(__name__)
 db = MongoEngine(app)
 
-@app.route("/")
-def hello():
-    return "Hello world!"
+from handlers_woj import *
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
