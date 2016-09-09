@@ -1,7 +1,10 @@
 import json
 from bson import ObjectId
+from functools import wraps
 
+from app import app
 import mongoengine as me
+
 
 class JSONEncoder(json.JSONEncoder):
     """Class for encoding dicts from pymongo, with ObjectIDs."""
@@ -22,6 +25,13 @@ def make_serializable(o):
 
 def serialize_response(func):
     """Decorator that JSON serializes response."""
+    @wraps(func)
     def func_wrapper(*args, **kwargs):
         return JSONEncoder().encode(make_serializable(func(*args, **kwargs)))
     return func_wrapper
+
+
+def route(rule, endpoint, view_func, method):
+    """Adds route to app."""
+    assert rule[-1] == '/', 'rule should end in a trailing slash'
+    app.add_url_rule(rule, endpoint, view_func, methods=[method])

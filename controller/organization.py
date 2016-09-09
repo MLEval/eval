@@ -21,15 +21,14 @@ def update_organization(oid):
     """Update organization and return."""
     kwargs = {'name': request.form['name']}
     org = Organization.objects.get_or_404(id=oid)
-    if org.modify(**kwargs):
-        return org
-    return None
+    org.modify(**kwargs)
+    return org
 
 
 @serialize_response
 def get_all_organizations():
     """Gets all organizations."""
-    return Organization.objects
+    return Organization.objects.all()
 
 
 def delete_all_organizations():
