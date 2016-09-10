@@ -1,5 +1,5 @@
 from e import app
-from e.routes_woj import *
+from e.routes import *
 
 if __name__ == "__main__":
     app.run(debug=True)
