@@ -1,12 +1,13 @@
 from flask import request
 
-from model.organization import Organization
-from utils import serialize_response
+from e.model.organization import Organization
+from e.utils import serialize_response
 
 
 @serialize_response
 def create_organization():
     """Create new organization and return object."""
+    # TODO: handle case where name is not given (maybe make decorator)
     return Organization(name=request.form['name']).save()
 
 
@@ -19,7 +20,7 @@ def get_organization(oid):
 @serialize_response
 def update_organization(oid):
     """Update organization and return."""
-    kwargs = {'name': request.form['name']}
+    kwargs = request.form.to_dict()
     org = Organization.objects.get_or_404(id=oid)
     org.modify(**kwargs)
     return org
