@@ -2,7 +2,8 @@ from e import app
 from e.controller import (
     organization as o,
     user as u,
-    model as m
+    model as m,
+    prediction as p
 )
 
 def index():
@@ -59,3 +60,13 @@ app.add_url_rule('/user/<uid>/models/', 'get_user_models',
 
 app.add_url_rule('/organization/<oid>/models/', 'get_org_models',
                  m.get_org_models, methods=['GET'])
+
+########################
+# Prediction Endpoints
+########################
+
+app.add_url_rule('/model/<mid>/predictions', 'add_model_prediction',
+                 p.add_model_prediction, methods=['POST'])
+
+app.add_url_rule('/model/<mid>/predictions', 'get_model_predictions',
+                 p.get_model_predictions, methods=['GET'])

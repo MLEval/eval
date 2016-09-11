@@ -15,6 +15,8 @@ def create_model():
     # so no need for this
     User.objects.get_or_404(id=request.form['creator'])
 
+    # TODO(rossem): make sure classes dont have the same name
+
     return Model(**{
         'name': request.form['name'],
         'oid': request.form['oid'],
