@@ -1,4 +1,3 @@
-from bson.objectid import ObjectId
 from flask import request
 
 from e.model.organization import Organization
@@ -19,7 +18,7 @@ def create_user():
         kwargs['last_name'] = request.form['last_name']
     if 'oid' in request.form:
         Organization.objects.get_or_404(id=request.form['oid'])
-        kwargs['oid'] = ObjectId(request.form['oid'])
+        kwargs['oid'] = request.form['oid']
 
     return User(**kwargs).save()
 
@@ -36,7 +35,7 @@ def update_user(uid):
     kwargs = request.form.to_dict()
     if 'oid' in kwargs:
         Organization.objects.get_or_404(id=kwargs['oid'])
-        kwargs['oid'] = ObjectId(kwargs['oid'])
+        kwargs['oid'] = kwargs['oid']
 
     user = User.objects.get_or_404(id=uid)
     user.modify(**kwargs)

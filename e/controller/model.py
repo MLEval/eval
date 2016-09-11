@@ -1,4 +1,3 @@
-from bson.objectid import ObjectId
 from flask import request
 
 from e.model.organization import Organization
