@@ -1,8 +1,15 @@
 from e import app
 from e.controller import (
     organization as o,
-    user as u
+    user as u,
+    model as m
 )
+
+def index():
+    return 'hello world'
+
+app.add_url_rule('/', 'index',
+                 index, methods=['POST'])
 
 ########################
 # Organization Endpoints
@@ -33,3 +40,22 @@ app.add_url_rule('/user/all/', 'get_all_users',
                  u.get_all_users, methods=['GET'])
 app.add_url_rule('/user/die/', 'delete_all_users',
                  u.delete_all_users, methods=['DELETE'])
+
+########################
+# Model Endpoints
+########################
+
+app.add_url_rule('/model/', 'create_model',
+                 m.create_model, methods=['POST'])
+
+app.add_url_rule('/model/<id>/', 'get_model',
+                 m.get_model, methods=['GET'])
+
+app.add_url_rule('/model/<id>', 'update_model',
+                 m.update_model, methods=['PUT'])
+
+app.add_url_rule('/user/<uid>/models/', 'get_user_models',
+                 m.get_user_models, methods=['GET'])
+
+app.add_url_rule('/organization/<oid>/models/', 'get_org_models',
+                 m.get_org_models, methods=['GET'])
