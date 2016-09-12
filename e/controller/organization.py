@@ -1,7 +1,9 @@
 from flask import request
+from mongoengine.errors import DoesNotExist
 
 from e.model.organization import Organization
 from e.utils import serialize_response
+from e.errors import APIError, ORG_NOT_FOUND
 
 
 @serialize_response
@@ -14,14 +16,23 @@ def create_organization():
 @serialize_response
 def get_organization(oid):
     """Get organization with given oid."""
-    return Organization.objects.get_or_404(id=oid)
+    try:
+        return Organization.objects.get(id=oid)
+    except DoesNotExist:
+        raise APIError(ORG_NOT_FOUND, status_code=404)
 
 
 @serialize_response
 def update_organization(oid):
     """Update organization and return."""
     kwargs = request.form.to_dict()
-    org = Organization.objects.get_or_404(id=oid)
+
+    org = None
+    try:
+        org = Organization.objects.get(id=oid)
+    except DoesNotExist:
+        raise APIError(ORG_NOT_FOUND, status_code=404)
+
     org.modify(**kwargs)
     return org
 
