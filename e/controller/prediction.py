@@ -11,6 +11,8 @@ def add_model_prediction(mid):
     model = Model.objects.get_or_404(id=mid)
 
     # request.form is immutable :(
+    # TODO(rossem): if they don't pass an identifier, we should generate one
+    # and return it. Maybe we can just return the prediciction token.
     identifier = request.form['identifier']
     probability = request.form['probability']
     threshold = request.form.get('threshold')
@@ -50,6 +52,7 @@ def add_model_prediction(mid):
         'threshold': threshold,
         'value': value
     }).save()
+
 
 @serialize_response
 def get_model_predictions(mid):

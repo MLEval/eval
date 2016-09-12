@@ -17,4 +17,4 @@ class Prediction(db.Document):
 
     @property
     def model(self):
-    	Model.objects(id=mid)
+        return Model.objects.get(id=self.mid)
