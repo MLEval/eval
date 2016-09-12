@@ -3,14 +3,15 @@ from e.controller import (
     organization as o,
     user as u,
     model as m,
-    prediction as p
+    prediction as p,
+    result as r
 )
 
 def index():
     return 'hello world'
 
 app.add_url_rule('/', 'index',
-                 index, methods=['POST'])
+                 index, methods=['GET'])
 
 ########################
 # Organization Endpoints
@@ -70,3 +71,13 @@ app.add_url_rule('/model/<mid>/predictions', 'add_model_prediction',
 
 app.add_url_rule('/model/<mid>/predictions', 'get_model_predictions',
                  p.get_model_predictions, methods=['GET'])
+
+########################
+# Result Endpoints
+########################
+
+app.add_url_rule('/model/<mid>/results', 'add_model_result',
+                 r.add_model_result, methods=['POST'])
+
+app.add_url_rule('/model/<mid>/results', 'get_model_results',
+                 r.get_model_results, methods=['GET'])
